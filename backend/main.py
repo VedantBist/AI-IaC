@@ -1,14 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import joblib
 import numpy as np
-import os
+from fastapi import HTTPException
+from pathlib import Path
+
+from ml.model_registry import MODEL_REGISTRY, public_model_metadata
 
 
 app = FastAPI(
     title="AI Prediction Service",
-    description="Breast Cancer Prediction API",
+    description="Multi-model scikit-learn prediction API",
     version="1.0"
 )
 
@@ -30,14 +33,11 @@ app.add_middleware(
 # MODEL
 # --------------------------------------------------
 
-MODEL_PATH = os.path.join(
-    os.path.dirname(__file__),
-    "..",
-    "ml",
-    "model.pkl"
-)
-
-model = joblib.load(MODEL_PATH)
+MODELS = {}
+for model_id, metadata in MODEL_REGISTRY.items():
+    artifact = Path(metadata["artifact"])
+    if artifact.exists():
+        MODELS[model_id] = joblib.load(artifact)
 
 
 # --------------------------------------------------
@@ -45,7 +45,13 @@ model = joblib.load(MODEL_PATH)
 # --------------------------------------------------
 
 class PredictionRequest(BaseModel):
-    features: list[float]
+    model: str = "breast_cancer"
+    features: list[float] = Field(..., min_length=1)
+
+
+@app.get("/models")
+def models():
+    return {"models": public_model_metadata()}
 
 
 # --------------------------------------------------
@@ -68,18 +74,28 @@ def home():
 @app.post("/predict")
 def predict(request: PredictionRequest):
 
+    metadata = MODEL_REGISTRY.get(request.model)
+    model = MODELS.get(request.model)
+
+    if metadata is None or model is None:
+        raise HTTPException(status_code=404, detail="Unknown or unavailable model.")
+
+    if len(request.features) != metadata["features"]:
+        raise HTTPException(
+            status_code=422,
+            detail=f"Model '{request.model}' expects exactly {metadata['features']} features.",
+        )
+
     input_data = np.array(
         request.features
     ).reshape(1, -1)
 
     prediction = model.predict(input_data)[0]
+    response = {"model": request.model, "class": int(prediction) if metadata["task"] != "Regression" else None}
 
-    if prediction == 0:
-        result = "Malignant"
+    if metadata["task"] == "Regression":
+        response["prediction"] = round(float(prediction), 4)
     else:
-        result = "Benign"
+        response["prediction"] = metadata["labels"][int(prediction)]
 
-    return {
-        "prediction": result,
-        "class": int(prediction)
-    }
+    return response

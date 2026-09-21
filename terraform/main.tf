@@ -13,8 +13,9 @@ resource "docker_image" "ai_service" {
   name = "ai-iac-service:latest"
 
   build {
-    context    = "../"
-    dockerfile = "Dockerfile"
+    context    = "${path.module}/.."
+    dockerfile = "${path.module}/../Dockerfile"
+    builder    = "default"
   }
 }
 

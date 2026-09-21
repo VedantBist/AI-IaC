@@ -3,7 +3,8 @@ FROM python:3.11-slim
 WORKDIR /app
 
 COPY backend/main.py ./backend/main.py
-COPY ml/model.pkl ./ml/model.pkl
+COPY ml/model_registry.py ./ml/model_registry.py
+COPY ml/models ./ml/models
 
 RUN pip install --no-cache-dir fastapi uvicorn joblib numpy scikit-learn
 
