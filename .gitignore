@@ -1,0 +1,24 @@
+cat > .gitignore <<'EOF'
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# macOS
+.DS_Store
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/crash.log
+terraform/crash.*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+EOF

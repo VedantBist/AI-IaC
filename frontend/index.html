@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Infrastructure Control</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="page">
+
+        <!-- HEADER -->
+        <header class="topbar">
+
+            <div class="brand">
+                <div class="brand-mark">AI</div>
+
+                <div>
+                    <div class="brand-name">Infrastructure Control</div>
+                    <div class="brand-subtitle">AI DevOps · IaC Console</div>
+                </div>
+            </div>
+
+            <div class="header-status">
+                <span class="status-dot"></span>
+                <span id="headerStatus">SYSTEM ONLINE</span>
+            </div>
+
+        </header>
+
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="hero-copy">
+
+                <div class="eyebrow">
+                    INFRASTRUCTURE AS CODE
+                </div>
+
+                <h1>
+                    Define infrastructure.<br>
+                    <span>Deploy intelligence.</span>
+                </h1>
+
+                <p>
+                    A controlled environment for deploying and managing
+                    an AI prediction service through Terraform and Docker.
+                </p>
+
+            </div>
+
+            <div class="hero-meta">
+
+                <div class="meta-line">
+                    <span>MODEL</span>
+                    <strong>Breast Cancer Classifier</strong>
+                </div>
+
+                <div class="meta-line">
+                    <span>RUNTIME</span>
+                    <strong>Docker · FastAPI</strong>
+                </div>
+
+                <div class="meta-line">
+                    <span>INFRASTRUCTURE</span>
+                    <strong>Terraform</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MAIN CONTROL AREA -->
+        <main class="workspace">
+
+
+            <!-- INFRASTRUCTURE -->
+            <section class="panel infrastructure-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <div class="panel-label">01 / INFRASTRUCTURE</div>
+                        <h2>System state</h2>
+                    </div>
+
+                    <span class="live-label">
+                        LIVE
+                    </span>
+
+                </div>
+
+
+                <div class="system-list">
+
+                    <div class="system-row">
+
+                        <div class="system-info">
+                            <span class="system-name">Terraform</span>
+                            <span class="system-description">
+                                Infrastructure definition
+                            </span>
+                        </div>
+
+                        <div class="system-state">
+                            <span class="state-indicator ready"></span>
+                            <span id="terraformState">READY</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="system-row">
+
+                        <div class="system-info">
+                            <span class="system-name">Docker</span>
+                            <span class="system-description">
+                                Container runtime
+                            </span>
+                        </div>
+
+                        <div class="system-state">
+                            <span class="state-indicator ready"></span>
+                            <span id="dockerState">RUNNING</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="system-row">
+
+                        <div class="system-info">
+                            <span class="system-name">AI Service</span>
+                            <span class="system-description">
+                                FastAPI prediction endpoint
+                            </span>
+                        </div>
+
+                        <div class="system-state">
+                            <span class="state-indicator ready"></span>
+                            <span id="aiState">ONLINE</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="control-area">
+
+                    <div class="control-heading">
+                        Infrastructure controls
+                    </div>
+
+                    <div class="control-buttons">
+
+                        <button class="primary-button" id="deployBtn">
+                            <span>Deploy infrastructure</span>
+                            <span class="button-key">⌘ D</span>
+                        </button>
+
+                        <button class="secondary-button" id="destroyBtn">
+                            <span>Destroy infrastructure</span>
+                            <span class="button-key">⌘ X</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PREDICTION -->
+            <section class="panel prediction-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <div class="panel-label">02 / AI SERVICE</div>
+                        <h2>Prediction</h2>
+                    </div>
+
+                    <span class="service-port">
+                        :8001
+                    </span>
+
+                </div>
+
+
+                <div class="prediction-content">
+
+                    <div class="prediction-description">
+                        Execute a live inference request against the
+                        Terraform-managed AI service.
+                    </div>
+
+                    <div class="model-details">
+
+                        <div>
+                            <span>MODEL</span>
+                            <strong>Logistic Regression</strong>
+                        </div>
+
+                        <div>
+                            <span>DATASET</span>
+                            <strong>Breast Cancer</strong>
+                        </div>
+
+                    </div>
+
+
+                    <button class="prediction-button" id="predictBtn">
+                        Run prediction
+                    </button>
+
+
+                    <div class="prediction-result">
+
+                        <span class="result-label">
+                            LATEST RESULT
+                        </span>
+
+                        <div id="predictionResult" class="result-value">
+                            —
+                        </div>
+
+                        <div id="predictionMeta" class="result-meta">
+                            Awaiting inference request
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+
+        <!-- ACTIVITY -->
+        <section class="activity-section">
+
+            <div class="activity-header">
+
+                <div>
+                    <div class="panel-label">03 / ACTIVITY</div>
+                    <h2>Terraform execution</h2>
+                </div>
+
+                <button id="clearActivity" class="clear-button">
+                    Clear
+                </button>
+
+            </div>
+
+
+            <div class="terminal">
+
+                <div class="terminal-topbar">
+
+                    <div class="terminal-title">
+                        infrastructure-console
+                    </div>
+
+                    <div class="terminal-status">
+                        READY
+                    </div>
+
+                </div>
+
+                <div id="activityLog" class="terminal-body">
+
+                    <div class="log-line system-log">
+                        <span class="log-time">--:--:--</span>
+                        <span>Console initialized.</span>
+                    </div>
+
+                    <div class="log-line">
+                        <span class="log-time">--:--:--</span>
+                        <span>Waiting for infrastructure command.</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <span>AI-IaC PROJECT</span>
+
+            <span>
+                Terraform · Docker · FastAPI · Machine Learning
+            </span>
+
+        </footer>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
